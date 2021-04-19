@@ -1,6 +1,6 @@
 job {
   parameters {
-    stringParam('REPO', 'git@github.com:maleksandar/internship-belgrade2020.git', 'This is just informative field, don't edit. ')
+    stringParam('REPO', 'git@github.com:maleksandar/internship-belgrade2020.git', 'This is just informative field, don\'t edit. ')
     gitParameter {
       name('BRANCH')
 
