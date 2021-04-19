@@ -1,0 +1,47 @@
+job {
+  parameters {
+    stringParam('REPO', 'git@github.com:maleksandar/internship-belgrade2020.git', 'This is just informative field, don't edit. ')
+    gitParameter {
+      name('BRANCH')
+
+      type('Branch')
+
+      defaultValue('origin/master')
+
+      description('Name of GIT branch')
+  } 
+  
+  scm {
+    git {
+      remote {
+        url('git@github.com:maleksandar/internship-belgrade2020.git')
+        credentials('jenkins_git')
+      }
+      branches('${BRANCH}')
+    }
+  }
+
+  publishers {
+    wsCleanup()
+  }
+  
+  wrappers {
+    sshAgent('jenkins_git')
+  }
+
+  steps {
+    shell('''
+      apt-get -y -qq update && apt-get -y -qq install yarnpkg npm rsync
+      npm install
+      yarnpkg build
+
+      parent=`echo $JOB_NAME|awk -F/ '{print tolower($2)}'`
+      branch=`echo $GIT_BRANCH|awk -F/ '{print tolower($NF)}'`
+
+      rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" -a --delete build/ deployer@35.246.187.112:/var/www/vhosts/$parent-$branch/
+
+      echo "Deployment finished, please visit: http://$parent-$branch.cica.short.rs/"
+    ''')
+  }
+
+}
