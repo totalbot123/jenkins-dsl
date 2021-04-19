@@ -1,4 +1,4 @@
-job('uniecom') {
+job('Projects/uniecom/BuildStart') {
   parameters {
     stringParam('REPO', 'git@github.com:bculibrk/uniecom.git', 'This is just informative field, don\'t edit. ')
     gitParam('BRANCH') {
