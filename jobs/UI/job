@@ -21,7 +21,7 @@ job('UI') {
   }
 
   publishers {
-    wsCleanup()
+    preBuildCleanup()
   }
   
   wrappers {
@@ -30,16 +30,16 @@ job('UI') {
 
   steps {
     shell('''
-      apt-get -y -qq update && apt-get -y -qq install yarnpkg npm rsync
-      npm install
-      yarnpkg build
+    apt-get -y -qq update && apt-get -y -qq install yarnpkg npm rsync
+    npm install
+    yarnpkg build
 
-      parent=`echo $JOB_NAME|awk -F/ '{print tolower($2)}'`
-      branch=`echo $GIT_BRANCH|awk -F/ '{print tolower($NF)}'`
+    parent=`echo $JOB_NAME|awk -F/ '{print tolower($2)}'`
+    branch=`echo $GIT_BRANCH|awk -F/ '{print tolower($NF)}'`
 
-      rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" -a --delete build/ deployer@35.246.187.112:/var/www/vhosts/$parent-$branch/
+    rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" -a --delete build/ deployer@35.246.187.112:/var/www/vhosts/$parent-$branch/
 
-      echo "Deployment finished, please visit: http://$parent-$branch.cica.short.rs/"
+    echo "Deployment finished, please visit: http://$parent-$branch.cica.short.rs/"
     ''')
   }
 }
