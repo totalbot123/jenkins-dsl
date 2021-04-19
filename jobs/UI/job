@@ -22,7 +22,7 @@ job('UI') {
   
   wrappers {
     sshAgent('jenkins_git')
-            preBuildCleanup()
+    preBuildCleanup()
   }
 
   steps {
@@ -36,7 +36,7 @@ branch=`echo $GIT_BRANCH|awk -F/ '{print tolower($NF)}'`
 
 rsync -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" -a --delete build/ deployer@35.246.187.112:/var/www/vhosts/$parent-$branch/
 
-echo "Deployment finished, please visit: http://$parent-$branch.cica.short.rs/"
-    ''')
+echo "Deployment finished, please visit: http://$parent-$branch.cica.short.rs/"'''
+    )
   }
 }
