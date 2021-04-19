@@ -9,8 +9,9 @@ job {
       defaultValue('origin/master')
 
       description('Name of GIT branch')
-  } 
-  
+    } 
+  }
+
   scm {
     git {
       remote {
@@ -43,5 +44,4 @@ job {
       echo "Deployment finished, please visit: http://$parent-$branch.cica.short.rs/"
     ''')
   }
-
 }
