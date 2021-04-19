@@ -2,7 +2,7 @@ job('UI') {
   parameters {
     stringParam('REPO', 'git@github.com:maleksandar/internship-belgrade2020.git', 'This is just informative field, don\'t edit. ')
     gitParam('BRANCH') {
-      type('Branch')
+      type('BRANCH')
 
       defaultValue('origin/master')
 
